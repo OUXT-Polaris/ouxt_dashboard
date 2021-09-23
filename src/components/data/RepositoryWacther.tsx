@@ -18,11 +18,15 @@ class RepositoryWatcher {
   /**
    * getTableData
    */
-  public getTableData(): RepositoryInfo[] {
+  public async getTableData(): Promise<RepositoryInfo[]> {
+    console.log("example");
     var data = new Array<RepositoryInfo>(0);
     this.repositories.forEach((repository) => {
-      data.push(repository.getTableData());
+      repository.getTableData().then((row) => {
+        data.push(row);
+      });
     });
+    console.log("hi");
     return data;
   }
 }

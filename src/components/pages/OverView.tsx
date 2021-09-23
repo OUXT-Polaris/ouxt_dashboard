@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import GenericTemplate from "../templates/GenericTemplate";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -9,7 +9,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Repository from "../data/Repository";
+import RepositoryInfo from "../data/RepositoryInfo";
 import RepositoryWatcher from "../data/RepositoryWacther";
+import { render } from "node-sass";
 
 const useStyles = makeStyles({
   table: {
@@ -17,10 +19,17 @@ const useStyles = makeStyles({
   },
 });
 
-const OverView: React.FC = () => {
+const OverView: React.FunctionComponent = () => {
   const classes = useStyles();
-  const repository_data = new RepositoryWatcher().getTableData();
-
+  const watcher = new RepositoryWatcher();
+  const [repository_data, setData] = useState(new Array<RepositoryInfo>());
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    const data = await watcher.getTableData();
+    setData(data);
+  }
   return (
     <GenericTemplate title="Overview">
       <TableContainer component={Paper}>

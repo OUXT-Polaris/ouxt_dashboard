@@ -14,14 +14,18 @@ class Repository {
   /**
    * getTableData
    */
-  public getTableData(): RepositoryInfo {
-    return {
+  public async getTableData() {
+    var info: RepositoryInfo = {
       repository: this.repository_name,
       build_status: this.getStatusBadgeUrl("BuildTest.yaml"),
-      last_update: this.getLatestCommitDate(),
+      last_update: "None",
       url: this.repository_url,
       branch: this.branch,
     };
+    this.getLatestCommitDate().then((data) => {
+      info.last_update = data;
+    });
+    return info;
   }
 
   private getStatusBadgeUrl(workflow_filename: string): string {
@@ -33,8 +37,7 @@ class Repository {
     );
   }
 
-  private getLatestCommitDate(): string {
-    let commit_date: string = "None";
+  private getLatestCommitDate(): Promise<string> {
     this.octokit.rest.repos
       .getCommit({
         owner: this.owner,
@@ -43,11 +46,15 @@ class Repository {
       })
       .then((response) => {
         if (response.headers["last-modified"] != null) {
-          commit_date = response.headers["last-modified"];
+          return new Promise((resolve) => {
+            resolve(response.headers["last-modified"]);
+          });
         }
       })
       .catch((error) => console.log(error.message));
-    return commit_date;
+    return new Promise((reject) => {
+      reject("Error");
+    });
   }
 
   constructor(repository_name: string, owner: string, branch: string) {
