@@ -1,5 +1,8 @@
 import { NoEncryption } from "@material-ui/icons";
 import { Octokit } from "@octokit/rest";
+import { Interface } from "readline";
+
+import RepositoryInfo from "./RepositoryInfo";
 
 class Repository {
   private repository_name: string;
@@ -10,7 +13,7 @@ class Repository {
   /**
    * getTableData
    */
-  public getTableData() {
+  public getTableData(): RepositoryInfo {
     return {
       repository: this.repository_name,
       build_status: this.getStatusBadgeUrl("BuildTest.yaml"),

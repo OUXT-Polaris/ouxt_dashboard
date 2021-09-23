@@ -9,11 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Repository from "../data/Repository";
-
-const repository_data = [
-  new Repository("behavior_tree_action_builder").getTableData(),
-  new Repository("color_names").getTableData(),
-];
+import RepositoryWatcher from "../data/RepositoryWacther";
 
 const useStyles = makeStyles({
   table: {
@@ -23,6 +19,7 @@ const useStyles = makeStyles({
 
 const OverView: React.FC = () => {
   const classes = useStyles();
+  const repository_data = new RepositoryWatcher().getTableData();
 
   return (
     <GenericTemplate title="ROS2 packages">
