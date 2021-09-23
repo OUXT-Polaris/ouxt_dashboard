@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { createTheme } from '@material-ui/core/styles'
+import { createTheme } from "@material-ui/core/styles";
 import * as colors from "@material-ui/core/colors";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
@@ -21,7 +21,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { IconContext } from 'react-icons'
+import { IconContext } from "react-icons";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 
 const drawerWidth = 240;
@@ -222,7 +222,7 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
             <Link to="/overview" className={classes.link}>
               <ListItem button>
                 <ListItemIcon>
-                    <BsFillGrid3X3GapFill/>
+                  <BsFillGrid3X3GapFill />
                 </ListItemIcon>
                 <ListItemText primary="OverView" />
               </ListItem>

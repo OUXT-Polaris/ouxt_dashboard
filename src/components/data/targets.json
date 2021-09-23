@@ -1,0 +1,12 @@
+{
+  "ros2": [
+    {
+      "name": "behavior_tree_action_builder",
+      "package_definitions": ["package.xml"]
+    },
+    {
+      "name": "color_names",
+      "package_definitions": ["package.xml"]
+    }
+  ]
+}

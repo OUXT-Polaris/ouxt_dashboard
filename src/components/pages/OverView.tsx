@@ -12,7 +12,7 @@ import Repository from "../data/Repository";
 
 const repository_data = [
   new Repository("behavior_tree_action_builder").getTableData(),
-  new Repository("color_names").getTableData()
+  new Repository("color_names").getTableData(),
 ];
 
 const useStyles = makeStyles({
@@ -39,9 +39,11 @@ const OverView: React.FC = () => {
             {repository_data.map((row) => (
               <TableRow key={row.repository}>
                 <TableCell component="th" scope="row">
-                <a href={row.url}>{row.repository}</a>
+                  <a href={row.url}>{row.repository}</a>
                 </TableCell>
-                <TableCell><img src={row.build_status}></img></TableCell>
+                <TableCell>
+                  <img src={row.build_status}></img>
+                </TableCell>
                 <TableCell>{row.latest_version}</TableCell>
               </TableRow>
             ))}
