@@ -8,21 +8,11 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
-const tableData = (
-  repository: string,
-  url: string,
-  build_test: string,
-  latest_version: string
-) => {
-  return { repository, build_test, latest_version, url };
-};
+import Repository from "../data/Repository";
 
 const repository_data = [
-  tableData("behavior_tree_action_builder",
-  "https://github.com/OUXT-Polaris/behavior_tree_action_builder",
-    "https://github.com/OUXT-Polaris/behavior_tree_action_builder/actions/workflows/BuildTest.yaml/badge.svg", 
-    "none")
+  new Repository("behavior_tree_action_builder").getTableData(),
+  new Repository("color_names").getTableData()
 ];
 
 const useStyles = makeStyles({
@@ -42,7 +32,7 @@ const OverView: React.FC = () => {
             <TableRow>
               <TableCell>Repository</TableCell>
               <TableCell>Build Test</TableCell>
-              <TableCell>Version</TableCell>
+              <TableCell>Latest Version</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -51,7 +41,7 @@ const OverView: React.FC = () => {
                 <TableCell component="th" scope="row">
                 <a href={row.url}>{row.repository}</a>
                 </TableCell>
-                <TableCell><img src={row.build_test}></img></TableCell>
+                <TableCell><img src={row.build_status}></img></TableCell>
                 <TableCell>{row.latest_version}</TableCell>
               </TableRow>
             ))}
