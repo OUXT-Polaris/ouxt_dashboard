@@ -22,14 +22,15 @@ const OverView: React.FC = () => {
   const repository_data = new RepositoryWatcher().getTableData();
 
   return (
-    <GenericTemplate title="ROS2 packages">
+    <GenericTemplate title="Overview">
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Repository</TableCell>
               <TableCell>Build Test</TableCell>
-              <TableCell>Latest Version</TableCell>
+              <TableCell>Branch</TableCell>
+              <TableCell>Last Update</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -41,7 +42,8 @@ const OverView: React.FC = () => {
                 <TableCell>
                   <img src={row.build_status}></img>
                 </TableCell>
-                <TableCell>{row.latest_version}</TableCell>
+                <TableCell>{row.branch}</TableCell>
+                <TableCell>{row.last_update}</TableCell>
               </TableRow>
             ))}
           </TableBody>

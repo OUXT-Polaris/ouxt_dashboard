@@ -8,6 +8,7 @@ class Repository {
   private repository_name: string;
   private owner: string;
   private repository_url: string;
+  private branch: string;
   private octokit: Octokit;
 
   /**
@@ -17,8 +18,9 @@ class Repository {
     return {
       repository: this.repository_name,
       build_status: this.getStatusBadgeUrl("BuildTest.yaml"),
-      latest_version: this.getLatestRelease(),
+      last_update: this.getLatestCommitDate(),
       url: this.repository_url,
+      branch: this.branch,
     };
   }
 
@@ -30,9 +32,9 @@ class Repository {
       "/badge.svg"
     );
   }
+
   private getLatestRelease(): string {
     let tag: string = "None";
-    console.log({ owner: this.owner, repo: this.repository_name });
     this.octokit.rest.repos
       .getLatestRelease({ owner: this.owner, repo: this.repository_name })
       .then((response) => {
@@ -41,12 +43,30 @@ class Repository {
       .catch((error) => console.log(error.message));
     return tag;
   }
-  constructor(repository_name: string, owner: string = "OUXT-Polaris") {
+  constructor(repository_name: string, owner: string, branch: string) {
     this.repository_name = repository_name;
     this.owner = owner;
     this.repository_url =
       "https://github.com/" + owner + "/" + this.repository_name;
+    this.branch = branch;
     this.octokit = new Octokit();
+  }
+
+  private getLatestCommitDate(): string {
+    let commit_date: string = "None";
+    this.octokit.rest.repos
+      .getCommit({
+        owner: this.owner,
+        repo: this.repository_name,
+        ref: this.branch,
+      })
+      .then((response) => {
+        if (response.headers.date != null) {
+          commit_date = response.headers.date;
+        }
+      })
+      .catch((error) => console.log(error.message));
+    return commit_date;
   }
 }
 

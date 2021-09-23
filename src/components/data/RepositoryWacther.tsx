@@ -7,7 +7,11 @@ class RepositoryWatcher {
   constructor() {
     this.repositories = [];
     targets.ros2.forEach((repository) => {
-      const repo = new Repository(repository.name);
+      const repo = new Repository(
+        repository.name,
+        "OUXT-Polaris",
+        repository.branch
+      );
       this.repositories.push(repo);
     });
   }
