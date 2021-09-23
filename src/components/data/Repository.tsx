@@ -33,25 +33,6 @@ class Repository {
     );
   }
 
-  private getLatestRelease(): string {
-    let tag: string = "None";
-    this.octokit.rest.repos
-      .getLatestRelease({ owner: this.owner, repo: this.repository_name })
-      .then((response) => {
-        tag = response.url;
-      })
-      .catch((error) => console.log(error.message));
-    return tag;
-  }
-  constructor(repository_name: string, owner: string, branch: string) {
-    this.repository_name = repository_name;
-    this.owner = owner;
-    this.repository_url =
-      "https://github.com/" + owner + "/" + this.repository_name;
-    this.branch = branch;
-    this.octokit = new Octokit();
-  }
-
   private getLatestCommitDate(): string {
     let commit_date: string = "None";
     this.octokit.rest.repos
@@ -61,12 +42,21 @@ class Repository {
         ref: this.branch,
       })
       .then((response) => {
-        if (response.headers.date != null) {
-          commit_date = response.headers.date;
+        if (response.headers["last-modified"] != null) {
+          commit_date = response.headers["last-modified"];
         }
       })
       .catch((error) => console.log(error.message));
     return commit_date;
+  }
+
+  constructor(repository_name: string, owner: string, branch: string) {
+    this.repository_name = repository_name;
+    this.owner = owner;
+    this.repository_url =
+      "https://github.com/" + owner + "/" + this.repository_name;
+    this.branch = branch;
+    this.octokit = new Octokit();
   }
 }
 
