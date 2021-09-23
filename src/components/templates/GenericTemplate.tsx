@@ -21,6 +21,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import { IconContext } from 'react-icons'
+import { BsFillGrid3X3GapFill } from "react-icons/bs";
 
 const drawerWidth = 240;
 
@@ -191,7 +193,7 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
               noWrap
               className={classes.title}
             >
-              ROS Repository Watcher
+              OUXT Dashboard
             </Typography>
           </Toolbar>
         </AppBar>
@@ -220,7 +222,7 @@ const GenericTemplate: React.FC<GenericTemplateProps> = ({
             <Link to="/overview" className={classes.link}>
               <ListItem button>
                 <ListItemIcon>
-                    <HomeIcon />
+                    <BsFillGrid3X3GapFill/>
                 </ListItemIcon>
                 <ListItemText primary="OverView" />
               </ListItem>
