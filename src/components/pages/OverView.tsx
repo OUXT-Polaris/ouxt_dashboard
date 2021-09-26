@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import GenericTemplate from "../templates/GenericTemplate";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -22,14 +22,14 @@ const useStyles = makeStyles({
 const OverView: React.FunctionComponent = () => {
   const classes = useStyles();
   const watcher = new RepositoryWatcher();
-  const [repository_data, setData] = useState(new Array<RepositoryInfo>());
+  var [repository_data, setData] = useState(new Array<RepositoryInfo>(0));
+  const fetchData = async () => {
+    var data = await watcher.getTableData();
+    setData(data);
+  };
   useEffect(() => {
     fetchData();
   }, []);
-  const fetchData = async () => {
-    const data = await watcher.getTableData();
-    setData(data);
-  }
   return (
     <GenericTemplate title="Overview">
       <TableContainer component={Paper}>

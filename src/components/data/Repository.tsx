@@ -1,3 +1,4 @@
+import { ownerWindow } from "@material-ui/core";
 import { NoEncryption } from "@material-ui/icons";
 import { Octokit } from "@octokit/rest";
 import { Interface } from "readline";
@@ -22,9 +23,12 @@ class Repository {
       url: this.repository_url,
       branch: this.branch,
     };
-    this.getLatestCommitDate().then((data) => {
-      info.last_update = data;
+    // console.log(info);
+    await this.getLatestCommitDate().then((date) => {
+      console.log(date);
+      info.last_update = date;
     });
+    // console.log(info);
     return info;
   }
 
@@ -37,24 +41,16 @@ class Repository {
     );
   }
 
-  private getLatestCommitDate(): Promise<string> {
-    this.octokit.rest.repos
-      .getCommit({
-        owner: this.owner,
-        repo: this.repository_name,
-        ref: this.branch,
-      })
-      .then((response) => {
-        if (response.headers["last-modified"] != null) {
-          return new Promise((resolve) => {
-            resolve(response.headers["last-modified"]);
-          });
-        }
-      })
-      .catch((error) => console.log(error.message));
-    return new Promise((reject) => {
-      reject("Error");
+  private async getLatestCommitDate() {
+    const response = await this.octokit.rest.repos.getCommit({
+      owner: this.owner,
+      repo: this.repository_name,
+      ref: this.branch,
     });
+    if (response.headers["last-modified"] != null) {
+      return response.headers["last-modified"];
+    }
+    return "Error";
   }
 
   constructor(repository_name: string, owner: string, branch: string) {
