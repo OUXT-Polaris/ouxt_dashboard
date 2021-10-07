@@ -23,9 +23,11 @@ const OverView: React.FunctionComponent = () => {
   const classes = useStyles();
   const watcher = new RepositoryWatcher();
   var [repository_data, setData] = useState(new Array<RepositoryInfo>(0));
+  const [fetched, setFetched] = useState(false);
   const fetchData = async () => {
     var data = await watcher.getTableData();
     setData(data);
+    setFetched(true);
   };
   useEffect(() => {
     fetchData();

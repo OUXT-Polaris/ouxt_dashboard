@@ -23,12 +23,9 @@ class Repository {
       url: this.repository_url,
       branch: this.branch,
     };
-    // console.log(info);
     await this.getLatestCommitDate().then((date) => {
-      console.log(date);
       info.last_update = date;
     });
-    // console.log(info);
     return info;
   }
 

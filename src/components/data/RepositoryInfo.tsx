@@ -1,4 +1,4 @@
-interface RepositoryInfo {
+type RepositoryInfo = {
   repository: string;
   build_status: string;
   last_update: string;
